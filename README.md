@@ -1,27 +1,118 @@
-# EtiqaAssessment
+# 🤖 Freelancer Hub
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.3.
+Connecting talented freelancers with clients in need of their services.
 
-## Development server
+## Table of contents
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [Requirements](#requirements)
+- [Project Description](#project-description)
+- [Installation](#installation)
+- [What's Inside](#whats-inside)
+  - [What's Inside Src Folder](#whats-inside-1)
+- [Configuration](#configuration)
 
-## Code scaffolding
+## Project Description
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Stack Used In The Project
 
-## Build
+This project has been made using [Angular](https://angular.io/) and also [Tailwind](https://tailwindcss.com/). All the components are lazy loaded for best performance.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Features
 
-## Running unit tests
+- http://localhost:4200/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  > homepage of the website. It displays the list of the freelancers.
 
-## Running end-to-end tests
+- http://localhost:4200/freelancer/:id
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  > specific freelancer page, which displays some information about them.
 
-## Further help
+- http://localhost:4200/admin/login
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  > login page for admin, before navigating to the admin dashboard
+
+- http://localhost:4200/admin/dashboard
+
+  > admin dashboard, which displays all the freelancers. In here, they are able to
+  >
+  > 1. create new freelancer.
+  > 2. update specific freelancer details.
+  > 3. delete specific freelancer.
+
+## Requirements
+
+- code editor (etc, visual studio code)
+- You must have node and npm installed (via brew install node or NodeJS.org);
+  - recommended for node version 16.19.0
+
+## Installation
+
+```bash
+$ cd [folder_name]
+$ git clone https://github.com/nazrighazi/freelancer-angular.git
+$ npm install or npm i
+$ npm start
+```
+
+Then navigate your browser to http://localhost:4200
+
+## Configuration
+
+Do change your api url inside the environment file:
+
+```dosini
+# src/environments/environment.development
+
+API_URL='[your_api_url'
+```
+
+## What's inside?<a id="whats-inside">
+
+A quick look at the top-level files and directories in this project.
+
+```shell
+├── .angular
+├── .vscode
+├── src
+├── .editorconfig
+├── .gitignore
+├── angular.json
+├── package-lock.json
+├── package.json
+├── README.md
+├── tailwind.config.js
+├── tsconfig.app.js
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.spec.json
+```
+
+## What's inside src/app? <a id="whats-inside-1">
+
+A quick look at the top-level files and directories in this project.
+
+```shell
+├── client
+	├── data access
+	├── feature
+	├── ui
+	├── utils
+├── public  # same structure as client
+├── app-routing.module.ts
+├── app.component.css
+├── app.component.css
+├── app.component.html
+├── app.component.spec.ts
+├── app.component.ts
+├── app.module.ts
+```
+
+1. **`./client`** : folder for specific flow. There's tho flow in this project, which is client and public.
+
+2. **`./data access`**: folder for files related with data fetching, such as services
+
+3. **`./feature`**: folder for all the files related with the pages
+
+4. **`./ui`**: dumb components
+
+5. **`./utils`**: helper functions, such as guard and interceptor
