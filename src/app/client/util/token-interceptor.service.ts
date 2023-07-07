@@ -5,8 +5,16 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  retry,
+  switchMap,
+  throwError,
+  timer,
+} from 'rxjs';
 import { AuthService } from '../data access/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +29,8 @@ export class TokenInterceptorService implements HttpInterceptor {
     let authService = this.inject.get(AuthService);
 
     let token = authService.getToken();
-
-    if (!token) {
+    let url = `${environment.API_URL}auth/admin/refresh`;
+    if (!token || req.url == url) {
       return next.handle(req);
     }
     let jwtToken = req.clone({
@@ -32,6 +40,10 @@ export class TokenInterceptorService implements HttpInterceptor {
     });
 
     return next.handle(jwtToken).pipe(
+      retry({
+        count: 3,
+        delay: (_, retryCount) => timer(retryCount * 1000),
+      }),
       catchError((errordata) => {
         if (errordata.status === 401) {
           // need to implement logout
@@ -49,7 +61,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     return authservice.GenerateRefreshToken().pipe(
       switchMap((data: any) => {
         authservice.SaveTokens(data);
-        return next.handle(this.AddTokenheader(request, data.jwtToken));
+        return next.handle(this.AddTokenheader(request, data.access_token));
       }),
       catchError((errodata) => {
         authservice.Logout();

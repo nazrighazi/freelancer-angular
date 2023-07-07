@@ -30,12 +30,14 @@ export class AuthService {
 
   GenerateRefreshToken() {
     const requestOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${this.GetRefreshToken()}`,
-      }),
+      headers: new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${this.GetRefreshToken()}`
+      ),
     };
     return this.http.post(
-      environment.API_URL + 'admin/refresh',
+      environment.API_URL + 'auth/admin/refresh',
+      null,
       requestOptions
     );
   }
