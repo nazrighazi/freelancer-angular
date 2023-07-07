@@ -2,6 +2,8 @@
 
 Connecting talented freelancers with clients in need of their services.
 
+Demo link : https://justfortuto.shop
+
 ## Table of contents
 
 - [Requirements](#requirements)
@@ -19,19 +21,23 @@ This project has been made using [Angular](https://angular.io/) and also [Tailwi
 
 ### Features
 
-- http://localhost:4200/
+- https://justfortuto.shop/
 
   > homepage of the website. It displays the list of the freelancers.
 
-- http://localhost:4200/freelancer/:id
+- https://justfortuto.shop/freelancer/:id
 
   > specific freelancer page, which displays some information about them.
 
-- http://localhost:4200/admin/login
+- https://justfortuto.shop/admin/login
 
   > login page for admin, before navigating to the admin dashboard
+  > login using these creds:
+  >
+  > - username: admin1
+  > - password: admin1234
 
-- http://localhost:4200/admin/dashboard
+- https://justfortuto.shop/admin/dashboard
 
   > admin dashboard, which displays all the freelancers. In here, they are able to
   >
