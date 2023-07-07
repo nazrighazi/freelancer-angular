@@ -1,0 +1,51 @@
+<div class="container mx-auto px-5 pt-10 h-screen max-h-screen min-h-screen">
+  <div
+    *ngIf="freelancer$ | async as freelancer"
+    class="grid max-md:grid-cols-1 md: grid-cols-2 md:gap-5"
+  >
+    <img
+      src="https://images.pexels.com/photos/2102415/pexels-photo-2102415.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      class="md:rounded-full max-md:rounded-lg object-cover w-full md:h-[90vh] max-md:h-[50vh]"
+      alt="image"
+    />
+    <div class="flex flex-col max-md:pt-3">
+      <h1 class="text-4xl font-[Lato] font-semibold text-center">
+        {{ freelancer.username }}
+      </h1>
+      <div
+        class="content pt-10 md:px-10 max-md:px-0 flex-1 flex flex-col justify-center pb-10"
+      >
+        <div class="pt-5">
+          <p class="text-2xl font-[Lato] font-bold">Name</p>
+          <p class="text-lg font-[Lato]">{{ freelancer.name }}</p>
+        </div>
+
+        <div class="pt-5">
+          <p class="text-2xl font-[Lato] font-bold">Hobby</p>
+          <p class="text-lg font-[Lato]">{{ freelancer.hobby }}</p>
+        </div>
+
+        <div class="pt-5">
+          <p class="text-2xl font-[Lato] font-bold">Email</p>
+          <p class="text-lg font-[Lato]">{{ freelancer.email }}</p>
+        </div>
+
+        <div class="pt-5">
+          <p class="text-2xl font-[Lato] font-bold">Contact Number</p>
+          <p class="text-lg font-[Lato]">{{ freelancer.phoneNum }}</p>
+        </div>
+
+        <p class="text-2xl font-[Lato] font-bold pt-5">Skillsets</p>
+        <div class="flex flex-wrap gap-4 pt-3 pb-5">
+          <div *ngFor="let skill of freelancer.skillSets">
+            <p
+              class="border rounded-lg border-purple-500 bg-purple-300 px-3 py-2 w-max font-[Lato]"
+            >
+              {{ skill.title }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

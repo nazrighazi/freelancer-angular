@@ -1,0 +1,93 @@
+<div class="p-5">
+  <h1 mat-dialog-title class="font-[Lato]">
+    {{ data?.title ?? "Add New Freelancer" }}
+  </h1>
+  <div mat-dialog-content class="pt-5">
+    <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-2 gap-4">
+        <input
+          type="text"
+          placeholder="name"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="name"
+        />
+        <input
+          type="text"
+          placeholder="username"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="username"
+        />
+        <input
+          type="email"
+          placeholder="email"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="email"
+        />
+        <input
+          type="number"
+          placeholder="phone number"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="phoneNum"
+        />
+        <input
+          type="string"
+          placeholder="hobby"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="hobby"
+        />
+        <div formArrayName="skillSets">
+          <div
+            *ngFor="let skillSet of skillSets.controls; let i = index"
+            formGroupName="{{ i }}"
+            class="flex flex-row gap-4 pt-2"
+          >
+            <input
+              type="string"
+              placeholder="skill"
+              class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+              formControlName="title"
+            />
+            <button
+              class="rounded-lg text-white px-3 py-2"
+              [ngClass]="{
+                'bg-red-500': i > 0 || skillSets.length > 1,
+                'bg-gray-400': i == 0 && skillSets.length == 1
+              }"
+              (click)="removeSkillSet(i)"
+              [disabled]="i == 0 && skillSets.length == 1"
+            >
+              Delete
+            </button>
+          </div>
+          <button
+            type="button"
+            class="underline pt-2 text-sm cursor-pointer"
+            *ngIf="skillSets.length < 5"
+            (click)="addSkillSet()"
+          >
+            Add more skill
+          </button>
+        </div>
+      </div>
+      <div class="space-x-5 pt-5">
+        <button
+          class="border rounded-lg border-red-600 text-red-600 px-3 py-2 hover:text-white hover:bg-red-600 text-sm"
+          (click)="onClose()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="border rounded-lg text-white px-3 py-2 text-sm"
+          [ngClass]="{
+            'bg-gray-400': !userForm.valid,
+            'bg-green-600': userForm.valid
+          }"
+          [disabled]="!userForm.valid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

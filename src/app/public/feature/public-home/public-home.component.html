@@ -1,0 +1,51 @@
+<div class="container mx-auto px-5 pt-10">
+  <div class="header mt-10">
+    <h1 class="font-[Lato] text-4xl font-bold">Website Development</h1>
+    <h3 class="font-[Lato] text-base pt-2">
+      Create, build and develop your website
+    </h3>
+    <hr class="mt-10" />
+  </div>
+  <div class="mt-10">
+    <div *ngIf="freelancersList$ | async as freelancerList">
+      <div class="">{{ freelancerList.length }} services available</div>
+      <div class="mt-5 grid lg:grid-cols-4 max-md:grid-cols-1 gap-8">
+        <div *ngFor="let list of freelancerList">
+          <div
+            class="img relative w-full"
+            (click)="navigateToFreelancer(list.id)"
+          >
+            <img
+              src="https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2022/12/freelance-websites-for-developers.webp"
+              alt="freelance-image ]"
+              class="rounded-lg object-fill"
+            />
+          </div>
+          <div class="content pt-2">
+            <div class="flex flex-row items-center gap-3">
+              <img
+                src="https://images.pexels.com/photos/2102415/pexels-photo-2102415.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                class="rounded-full w-[30px] h-[30px] object-cover"
+                alt="image"
+              />
+              <p class="text-base font-semibold font-[Lato]">{{ list.name }}</p>
+            </div>
+
+            <p class="pt-2 text-base font-thin font-[Lato]">
+              Some description here about the developer, what they do ....
+            </p>
+            <div class="flex flex-wrap gap-3 pt-3">
+              <div *ngFor="let skill of list.skillSets">
+                <p
+                  class="border border-purple-300 rounded-lg px-2 bg-purple-200"
+                >
+                  {{ skill.title }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
