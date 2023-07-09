@@ -13,32 +13,132 @@
       </ng-template>
 
       <form
-        class="form mt-10 flex flex-col justify-center items-center"
+        class="form mt-10 flex flex-col justify-center"
         [formGroup]="authForm"
         (ngSubmit)="onSubmit()"
       >
         <input
+          *ngIf="!isLogin"
+          type="text"
+          placeholder="name"
+          class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          formControlName="name"
+          [ngClass]="{
+            'border-red-400':
+              authForm.controls.name.invalid &&
+              (authForm.controls.name.touched || authForm.controls.name.dirty)
+          }"
+        />
+        <div
+          *ngIf="
+            authForm.controls.name.invalid &&
+            (authForm.controls.name.touched || authForm.controls.name.dirty)
+          "
+        >
+          <small
+            class="text-red-400 text-left"
+            *ngIf="authForm.controls.name.errors?.['required']"
+          >
+            Please enter your name</small
+          >
+        </div>
+        <input
+          *ngIf="!isLogin"
+          type="text"
+          placeholder="email"
+          class="border border-gray-300 rounded-lg w-full p-2 mt-6 font-[Lato] text-sm"
+          formControlName="email"
+          [ngClass]="{
+            'border-red-400':
+              authForm.controls.email.invalid &&
+              (authForm.controls.email.touched || authForm.controls.email.dirty)
+          }"
+        />
+        <div
+          *ngIf="
+            authForm.controls.email.invalid &&
+            (authForm.controls.email.touched || authForm.controls.email.dirty)
+          "
+        >
+          <small
+            class="text-red-400 text-left"
+            *ngIf="authForm.controls.email.errors?.['required'] || authForm.controls.email.errors?.['email']"
+          >
+            Please enter your email in the correct format</small
+          >
+        </div>
+        <input
           type="text"
           placeholder="username"
           class="border border-gray-300 rounded-lg w-full p-2 font-[Lato] text-sm"
+          [ngClass]="{
+            'mt-6': !isLogin,
+            'border-red-400':
+              authForm.controls.username.invalid &&
+              (authForm.controls.username.touched ||
+                authForm.controls.username.dirty)
+          }"
           formControlName="username"
         />
+        <div
+          *ngIf="
+            authForm.controls.username.invalid &&
+            (authForm.controls.username.touched ||
+              authForm.controls.username.dirty)
+          "
+        >
+          <small
+            class="text-red-400 text-left"
+            *ngIf="authForm.controls.username.errors?.['required']"
+          >
+            Please enter your username</small
+          >
+        </div>
+
         <input
-          type="text"
+          type="password"
           placeholder="password"
           class="border border-gray-300 rounded-lg w-full p-2 mt-6 font-[Lato] text-sm"
+          [ngClass]="{
+            'border-red-400':
+              authForm.controls.password.invalid &&
+              (authForm.controls.password.touched ||
+                authForm.controls.password.dirty)
+          }"
           formControlName="password"
         />
+        <div
+          *ngIf="
+            authForm.controls.password.invalid &&
+            (authForm.controls.password.touched ||
+              authForm.controls.password.dirty)
+          "
+        >
+          <small
+            class="text-red-400 text-left"
+            *ngIf="authForm.controls.password.errors?.['required']"
+          >
+            Please enter your password</small
+          >
+        </div>
+        <div
+          *ngIf="errorMessage"
+          class="errorMessage mt-4 p-2 bg-red-200 text-red-500 rounded-lg"
+        >
+          <p>{{ errorMessage }}</p>
+        </div>
         <button
           type="submit"
           class="p-2 mt-6 rounded-lg text-white w-full font-[Lato]"
           [ngClass]="{
-            'bg-gray-400': !authForm.valid,
-            'bg-blue-400': authForm.valid
+            'bg-gray-400': !authForm.valid || isLoading,
+            'bg-blue-400': authForm.valid,
+            'cursor-progress': isLoading,
+            'cursor-not-allowed': !authForm.valid
           }"
-          [disabled]="!authForm.valid"
+          [disabled]="!authForm.valid || isLoading"
         >
-          {{ isLogin ? "Login" : "Next" }}
+          {{ isLoading ? "Loading" : isLogin ? "Login" : "Next" }}
         </button>
       </form>
       <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-300" />
@@ -52,14 +152,17 @@
         <button
           class="border border-blue-400 text-blue-400 text-[12px] rounded-lg py-2 px-4 font-[Lato] hover:bg-blue-400 hover:text-white"
           (click)="onChangeAuth()"
-          #authButton
+          [ngClass]="{
+            'bg-gray-200 text-white border-none cursor-progress': isLoading
+          }"
+          [disabled]="isLoading"
         >
           {{ isLogin ? "Register" : "Login" }}
         </button>
       </div>
     </div>
     <div
-      class="lg:block lg:w-1/2 sm:hidden relative lg:p-5 max-h-full max-w-full"
+      class="lg:block lg:w-1/2 sm:hidden relative lg:p-5 max-h-full max-w-full h-full"
     >
       <img
         src="https://images.pexels.com/photos/2528116/pexels-photo-2528116.jpeg?auto=compress&cs=tinysrgb&w=800"

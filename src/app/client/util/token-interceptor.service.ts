@@ -64,7 +64,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         return next.handle(this.AddTokenheader(request, data.access_token));
       }),
       catchError((errodata) => {
-        authservice.Logout();
+        authservice.logout();
         return throwError(errodata);
       })
     );

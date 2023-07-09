@@ -9,11 +9,12 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FreelancerService } from '../../data access/freelancer.service';
+import { DigitOnlyDirective } from '../../util/numbers-only.directive';
 
 @Component({
   selector: 'app-freelancer-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DigitOnlyDirective],
   templateUrl: './freelancer-modal.component.html',
   styleUrls: ['./freelancer-modal.component.scss'],
 })
@@ -24,7 +25,7 @@ export class FreelancerModalComponent implements OnInit {
         name: string;
         username: string;
         email: string;
-        phoneNum: number;
+        phoneNum: string;
         hobby: string;
         title: string;
         skillSets: [{ title: string }];
@@ -40,7 +41,7 @@ export class FreelancerModalComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     phoneNum: new FormControl('', [
       Validators.required,
-      Validators.minLength(10),
+      Validators.pattern('[0-9]{10}'),
     ]),
     hobby: new FormControl('', [Validators.required]),
     skillSets: new FormArray([
@@ -59,7 +60,7 @@ export class FreelancerModalComponent implements OnInit {
           name: string;
           username: string;
           email: string;
-          phoneNum: number;
+          phoneNum: string;
           hobby: string;
           skillSets: [{ title: string }];
           title: string;
@@ -128,7 +129,7 @@ export class FreelancerModalComponent implements OnInit {
     name: string;
     username: string;
     email: string;
-    phoneNum: number;
+    phoneNum: string;
     skillSets: any;
     hobby: string;
     title: string;
@@ -151,7 +152,7 @@ export class FreelancerModalComponent implements OnInit {
       name,
       username,
       email,
-      phoneNum: phoneNum.toString(),
+      phoneNum: phoneNum,
       hobby,
     });
     console.log(this.userForm.value);

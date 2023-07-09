@@ -40,7 +40,7 @@ export class FreelancerService {
     const reqBody: Freelancers = {
       name: form.name,
       username: form.username,
-      phoneNum: form.phoneNum.toString(),
+      phoneNum: form.phoneNum,
       hobby: form.hobby,
       email: form.email,
       skillSets: form.skillSets,
@@ -55,7 +55,7 @@ export class FreelancerService {
     const reqBody: Freelancers = {
       name: form.name,
       username: form.username,
-      phoneNum: form.phoneNum.toString(),
+      phoneNum: form.phoneNum,
       hobby: form.hobby,
       email: form.email,
       skillSets: form.skillSets,

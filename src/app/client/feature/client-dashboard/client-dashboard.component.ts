@@ -6,6 +6,7 @@ import {
   Freelancers,
 } from '../../data access/freelancer.service';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { AuthService } from '../../data access/auth.service';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -15,7 +16,8 @@ import { Observable, catchError, map, of, tap } from 'rxjs';
 export class ClientDashboardComponent implements OnInit {
   constructor(
     private dialogRef: MatDialog,
-    private freelancerService: FreelancerService
+    private freelancerService: FreelancerService,
+    private authService: AuthService
   ) {}
 
   users = [
@@ -103,5 +105,9 @@ export class ClientDashboardComponent implements OnInit {
         this.getFreelancersList();
       });
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

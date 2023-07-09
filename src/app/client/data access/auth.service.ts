@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,6 +17,19 @@ export class AuthService {
     };
     return this.http.post<any>(
       environment.API_URL + 'auth/admin/signin',
+      reqBody
+    );
+  }
+
+  register(userReq: any) {
+    let reqBody = {
+      name: userReq.name,
+      username: userReq.username,
+      email: userReq.email,
+      password: userReq.password,
+    };
+    return this.http.post<any>(
+      environment.API_URL + 'auth/admin/signup',
       reqBody
     );
   }
@@ -51,7 +65,7 @@ export class AuthService {
     localStorage.setItem('refresh_token', tokendata.refresh_token);
   }
 
-  Logout() {
+  logout() {
     localStorage.clear();
     this.router.navigateByUrl('admin/login');
   }

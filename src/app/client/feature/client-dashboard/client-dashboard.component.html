@@ -1,12 +1,20 @@
 <div class="container mx-auto p-5">
   <div class="flex flex-row justify-between items-center font-[Lato]">
     <h2>List of Freelancers</h2>
-    <button
-      class="p-3 rounded-lg bg-blue-400 text-white text-sm"
-      (click)="createUser()"
-    >
-      Add Freelancer
-    </button>
+    <div class="flex flex-row gap-4">
+      <button
+        class="p-3 rounded-lg bg-blue-400 text-white text-sm"
+        (click)="createUser()"
+      >
+        Add Freelancer
+      </button>
+      <button
+        class="p-3 rounded-lg bg-red-400 text-white text-sm"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+    </div>
   </div>
 
   <!-- component -->
@@ -58,7 +66,7 @@
               Active
             </span>
           </td>
-          <td class="px-6 py-4">{{ user.phoneNum }}</td>
+          <td class="px-6 py-4" appNumbersOnly>{{ user.phoneNum }}</td>
           <td class="px-6 py-4">
             <div class="flex gap-2">
               <span
