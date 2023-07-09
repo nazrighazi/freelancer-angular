@@ -3,13 +3,20 @@
     <h2>List of Freelancers</h2>
     <div class="flex flex-row gap-4">
       <button
-        class="p-3 rounded-lg bg-blue-400 text-white text-sm"
+        class="p-3 rounded-lg text-sm text-white"
         (click)="createUser()"
+        [ngClass]="{
+          'bg-blue-400': !isLoading,
+          'bg-gray-400 ]': isLoading
+        }"
+        [disabled]="isLoading"
       >
         Add Freelancer
       </button>
       <button
-        class="p-3 rounded-lg bg-red-400 text-white text-sm"
+        class="p-3 rounded-lg text-white text-sm"
+        [disabled]="isLoading"
+        [ngClass]="{ 'bg-red-400': !isLoading, 'bg-gray-400': isLoading }"
         (click)="logout()"
       >
         Logout
@@ -79,7 +86,12 @@
           </td>
           <td class="px-6 py-4">
             <div class="flex justify-end gap-4">
-              <a x-data="{ tooltip: 'Delete' }" (click)="removeUser(user.id)">
+              <a
+                x-data="{ tooltip: 'Delete' }"
+                (click)="removeUser(user.id)"
+                [attr.disabled]="isLoading"
+                [ngClass]="{ 'cursor-progress': isLoading }"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -96,7 +108,12 @@
                   />
                 </svg>
               </a>
-              <a x-data="{ tooltip: 'Edite' }" (click)="editUser(user)">
+              <a
+                x-data="{ tooltip: 'Edite' }"
+                (click)="editUser(user)"
+                [attr.disabled]="isLoading"
+                [ngClass]="{ 'cursor-progress': isLoading }"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

@@ -10,6 +10,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FreelancerService } from '../../data access/freelancer.service';
 import { DigitOnlyDirective } from '../../util/numbers-only.directive';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-freelancer-modal',
@@ -41,7 +42,7 @@ export class FreelancerModalComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     phoneNum: new FormControl('', [
       Validators.required,
-      Validators.pattern('[0-9]{10}'),
+      Validators.pattern('[0-9]{10,11}'),
     ]),
     hobby: new FormControl('', [Validators.required]),
     skillSets: new FormArray([
@@ -50,6 +51,9 @@ export class FreelancerModalComponent implements OnInit {
       }),
     ]),
   });
+
+  isLoading: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<FreelancerModalComponent>,
@@ -78,18 +82,40 @@ export class FreelancerModalComponent implements OnInit {
   }
 
   onSubmit() {
+    this.errorMessage = '';
     console.log('woof', this.inputData);
+    this.isLoading = true;
     if (!this.inputData) {
       this.freelancerService
         .createFreelancer(this.userForm.value)
-        .subscribe((res) => {
-          this.onClose('complete');
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.onClose('complete');
+          },
+          error: (error) => {
+            this.errorMessage = error.error.message;
+          },
         });
     } else {
       this.freelancerService
         .updateFreelancer(this.inputData.id, this.userForm.value)
-        .subscribe((res) => {
-          this.onClose('complete');
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe({
+          next: (res) => {
+            this.onClose('complete');
+          },
+          error: (error) => {
+            this.errorMessage = error.error.message;
+          },
         });
     }
   }

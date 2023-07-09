@@ -5,7 +5,7 @@ import {
   FreelancerService,
   Freelancers,
 } from '../../data access/freelancer.service';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, finalize, map, of, tap } from 'rxjs';
 import { AuthService } from '../../data access/auth.service';
 
 @Component({
@@ -50,6 +50,7 @@ export class ClientDashboardComponent implements OnInit {
   FreelancersList$!: Observable<Freelancers[]>;
   error: Error | null = null;
   woof: any = '';
+  isLoading: boolean = false;
 
   ngOnInit(): void {
     this.getFreelancersList();
@@ -100,10 +101,18 @@ export class ClientDashboardComponent implements OnInit {
 
   removeUser(userId: string | undefined) {
     if (confirm('Are you sure you want to delete the user?')) {
+      this.isLoading = true;
       // this.users = this.users.filter((item) => item.id !== userId);
-      this.freelancerService.removeFreelancer(userId).subscribe((res) => {
-        this.getFreelancersList();
-      });
+      this.freelancerService
+        .removeFreelancer(userId)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe((res) => {
+          this.getFreelancersList();
+        });
     }
   }
 
